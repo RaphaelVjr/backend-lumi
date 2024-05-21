@@ -1,20 +1,21 @@
-const express = require('express')
-const app = express();
-const cors = require('cors');
-require('dotenv').config
-const importPDFRoute = require('./src/routes/importPDF.route')
-const db = require('./src/database/db')
+const express =  require("express")
+const cors =  require("cors")
+const faturaRoutes = require("./src/routes/fatura.routes")
+const swaggerJsdoc = require("swagger-jsdoc")
+const swaggerOptions =  require("./swaggerConfig")
+const swaggerUi = require("swagger-ui-express")
+const app = express()
 const port = 3000
+const specs = swaggerJsdoc(swaggerOptions)
 
-app.use(cors());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
+
+app.use(cors())
 app.use(express.json())
-app.use("/importPDF", importPDFRoute);
+app.use(express.urlencoded({ extended: true }))
 
-db.connectDatabase().then(() => {
-    console.log('Database connected successfully');
-}).catch((err) => {
-    console.error('Failed to connect to the database', err);
-});
+app.use("/faturas", faturaRoutes)
 
-
-app.listen(port)
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`)
+})

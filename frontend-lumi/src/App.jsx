@@ -1,11 +1,24 @@
-import './App.css'
-import Dashboard from './pages/Dashboard/Dashboard';
+/* eslint-disable react/react-in-jsx-scope */
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import Dashboard from "./pages/Dashboard";
+import Library from "./pages/Library";
 
 function App() {
-
   return (
-  <Dashboard />
-  )
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/library" element={<Library />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
