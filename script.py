@@ -118,11 +118,11 @@ def extract_data_from_pdf(pdf_path):
 
 def insert_into_postgres(data):
     connection = psycopg2.connect(
-        user="postgres",
-        password="151176",
-        host="localhost",
+        user="default",
+        password="5CaMwAT9lYpc",
+        host="ep-ancient-breeze-a469x2p4-pooler.us-east-1.aws.neon.tech",
         port="5432",
-        database="postgres"
+        database="verceldb"
     )
 
     cursor = connection.cursor()
@@ -151,5 +151,5 @@ def process_pdfs(pdf_folder):
                 insert_into_postgres(data_with_id)
 
 if __name__ == "__main__":
-    pdf_folder = "./faturas"
+    pdf_folder = "faturas"
     process_pdfs(pdf_folder)
