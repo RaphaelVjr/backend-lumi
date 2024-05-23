@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "prisma generate",
+    "build": "prisma generate && babel src -d lib",
     "start": "node index.js",
     "dev": "nodemon index"
   },
@@ -16,6 +17,7 @@
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
     "apexcharts": "^3.49.1",
+    "babel": "^6.23.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -30,6 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
+    "babel-cli": "^6.26.0",
     "prisma": "^5.14.0"
   }
 }
