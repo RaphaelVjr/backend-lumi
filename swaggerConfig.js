@@ -20,9 +20,13 @@ const swaggerDefinition = {
       }
     },
     info: {
-      title: "Teste Lumi API",
+      title: "Express API Lumi",
       version: "1.0.0",
-      description: "API para gerenciamento de faturas de energia elétrica"
+      description: "Extração, gerenciamento e demonstração de dados.",
+      contact: {
+        name: "Raphael VItório",
+        email: "contatoraphaelvjr@gmail.com"
+      }
     },
     servers: [
       {
@@ -34,7 +38,7 @@ const swaggerDefinition = {
   
   const options = {
     swaggerDefinition,
-    apis: ["./routes/index.js"]
+    apis: ["./src/routes/fatura.routes.js", "./src/routes/otherRoute.routes.js"] // Include specific route files
   };
 
 module.exports = options;
