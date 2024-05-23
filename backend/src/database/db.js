@@ -1,16 +1,14 @@
-const pgp = require('pg-promise')();
+const { Pool } = require('pg');
 
-const db = pgp({
-    host: 'localhost',
-    port: 5432,
-    database: 'postgres',
-    user: 'postgres',
-    password: '151176'
-});
 
-const connectDatabase = () => {
-    return db.connect()
-}
+const pool = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+  })
+
+pool.connect((err) =>{
+    if (err) throw err
+    console.log("Connected Postgres Succesfully")
+})
 
 
 async function insertFatura(cliente, mesReferencia, energiaEletrica, energiaSCEEE, energiaCompensada, contribIlumPublica) {
@@ -18,4 +16,4 @@ async function insertFatura(cliente, mesReferencia, energiaEletrica, energiaSCEE
     return res;
 }
 
-module.exports = { connectDatabase, insertFatura };
+module.exports = { pool, insertFatura };
