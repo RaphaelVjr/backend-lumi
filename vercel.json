@@ -22,5 +22,8 @@
                 "Access-Control-Allow-Origin": "*"
             }
         }
+    ],
+    "rewrites": [
+        { "source": "/static/(.*)", "destination": "/public/$1" }
     ]
 }
