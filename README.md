@@ -1,5 +1,9 @@
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)
 
-# Extração e Exibição de dados de Fatura de Luz
+![Stars](https://img.shields.io/github/stars/{username}/{repo-name}.svg)
+
+# Extração e Exibição de dados de Fatura de Luz :zap:
 
 Projeto designado a extrair dados dos extratos das faturas de luz, organizá-los e aplicar regras para exibição dos mesmos em gráficos onde podemos distinguir a comparação dos valores.
 
@@ -22,108 +26,120 @@ Variáveis a serem exibidas:
 
 
 
-## Tecnologias Utilizadas
-
-Dillinger uses a number of open source projects to work properly:
-
-- [AngularJS] - HTML enhanced for web apps!
-- [Ace Editor] - awesome web-based text editor
-- [markdown-it] - Markdown parser done right. Fast and easy to extend.
-- [Twitter Bootstrap] - great UI boilerplate for modern web apps
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
-- [Gulp] - the streaming build system
-- [Breakdance](https://breakdance.github.io/breakdance/) - HTML
-to Markdown converter
-- [jQuery] - duh
-
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
-## Installation
-
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-```sh
-cd dillinger
-npm i
-node app
-```
-
-For production environments...
-
-```sh
-npm install --production
-NODE_ENV=production node app
-```
-## Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-
-```sh
-node app
-```
-
-Second Tab:
-
-```sh
-gulp watch
-```
-
-(optional) Third:
-
-```sh
-karma test
-```
-
-## API Documentation
-
-All the routes and their methods.
-
-```http
-  post '/submit_ratings', to: 'ratings#submit'
-  get '/users', to: 'users#index'
-  post '/movies', to: 'movies#create'
-  post '/users',   to: 'users#create'
-  post 'import_movies', to: 'movies#import'  
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
-```
+## Tecnologias Utilizadas 💻
+![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
+![Mocha.js](https://img.shields.io/badge/mocha.js-323330?style=for-the-badge&logo=mocha&logoColor=Brown)
+![Chai.js](https://img.shields.io/badge/chai.js-323330?style=for-the-badge&logo=chai&logoColor=red)
+![Sinon](https://img.shields.io/badge/sinon.js-323330?style=for-the-badge&logo=sinon)
 
 
+## Instalação :hammer_and_wrench:
+Siga todos os passos para rodar o projeto localmente.
 
-## Running Tests
+#### Passo 1 - Pré Requisitos:
 
-To run tests in the repository using Rspec you need to:
+- **Postgres 16**
+- **Node**
+- **NPM ou YARN**
+- **Python3 & pip3**
 
 ```bash
-  bundle exec rspec
+  git clone https://github.com/RaphaelVjr/backend-lumi.git
 ```
 
+Entre no diretório do projeto
 
-## Stacks
+Instale as dependências! Dentro da pasta do projeto execute: 
+```sh
+npm install
+```
 
-**Front-end ([Repo]):** [React], [Kendo UI] (Click to know more).
-
-**Back-end:** [Ruby On Rails], [Redis] and [Sidekiq] (Click to know more).
+#### Passo 2 - Configuração do banco de dados :lock:
 
 
+- No diretório do projeto crie um arquivo .env
+- Tenha o seu usuário e senha do Postgres.
+- Dentro do arquivo você irá colar e preencher os seguintes dados: 
+```sh
+DATABASE_URL=""
+DATABASE_USER=""
+DATABASE_HOST=""
+DATABASE_PASSWORD=""
+DATABASE_PORT="5432"
+```
+- Execute o pgAdmin e crie um servidor:
+(Imagem)
+- Na aba de connection, insira o endereço do banco como **localhost** coloque seu usuário e senha cadastrado no postgres e aperte em **Save** para efetuar a conexão.
+
+#### Passo 3 - Migrar Schema do PRISMA
+
+- Voltando ao diretório, execute o comando para gerar os schemas:
+
+```sh
+prisma generate
+```
+- Dê refresh no banco e cheque no public > Schemas > Tables, se possui uma tabela chamada faturas.
+
+#### Passo 4 - Instalar requisitos para o Python Scrapper e rodar o Script.
+
+- Dentro do diretório do projeto digite: 
+
+```sh
+pip install -r requirements.txt
+```
+
+- Cheque se não ocorreu qualquer erro ao instalar alguma das dependências. Certifique de ter o pip3 e o Python3.
+- Coloque as faturas PDF dentro da pasta faturas do projeto.
+- Após isso execute o comando para rodar o scrapper de pdf:
+```sh
+python script.py
+```
+- Ele irá realizar a leitura dos PDF's na pasta Faturas, organizar os dados e inserir no banco. (Pode retornar logs de erro, porém são logs falso negativo. Ele realiza a leitura algumas vezes para coletar todos dados necessários, os dados chegarão íntegros ao banco)
+Obs: Faturas que não possuem os dados necessários retornam valor 0 para evitar erros de leitura.
+
+#### Último passo - Rodar o projeto
+
+```sh
+npm start
+```
+Irá iniciar rodando na porta 3000, cheque se a mesma não está em uso.
 
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-   [React]: <https://nodejs.org/en>
-   [Kendo UI]: <https://www.telerik.com/kendo-react-ui/components/getting-started/>
-   [Repo]: <https://github.com/RaphaelVjr/Frontend-React-Challenge>
-   [Ruby On Rails]: <https://rubyonrails.org/>
-   [Redis]: <https://redis.io/docs/install/install-redis/>
-   [Sidekiq]: <https://github.com/sidekiq/sidekiq/wiki/Getting-Started>
+## Features futuras :rocket:
+
+- Autenticação JWT
+
+
+## Documentação da API (Swagger Doc) :books:
+
+- http://localhost:3000/api-doc (Local)
+- https://backend-lumi.vercel.app/api-doc (Prod)
+
+
+
+## Rodando Testes :traffic_light:
+
+Para rodar os testes utilizando o o mocha basta digitar no terminal:
+
+```bash
+  npm run test
+```
+Testes foram feitos utilizando Mocha, Chai e Sinon.
+
+
+## Adicionais do projeto
+
+- :rotating_light: Watchdog python script para observar a entrada de arquivos importados e triggar o scrapper para ler o arquivo PDF novo e adicioná-lo ao banco.
+- Rota para importar os arquivos PDF e salvá-los.
+
+## Deploy
+
+Deploy feito na Vercel com o banco PostgreSQL na Vercel também.
+
+
+![Love](http://ForTheBadge.com/images/badges/built-with-love.svg)
