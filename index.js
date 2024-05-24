@@ -67,9 +67,8 @@ const customCss = `
   border-radius: 5px;
 }
 `;
-
+const options = { customCssUrl: '/public/swagger-ui.css', customSiteTitle: "Teste LUMI API - Swagger"};
 app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs, options))
-const options = { customCssUrl: '/public/swagger-ui.css',};
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
