@@ -1,6 +1,7 @@
 const express =  require("express")
 const cors =  require("cors")
 const faturaRoutes = require("./src/routes/fatura.routes")
+const path = require('path');
 const swaggerJsdoc = require("swagger-jsdoc")
 const swaggerOptions =  require("./swaggerConfig")
 const swaggerUi = require("swagger-ui-express")
