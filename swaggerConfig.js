@@ -32,6 +32,10 @@ const swaggerDefinition = {
       {
         url: "http://localhost:3000",
         description: "Local server"
+      },
+      {
+        url: "https://backend-lumi.vercel.app/",
+        description: "Production server"
       }
     ]
   };

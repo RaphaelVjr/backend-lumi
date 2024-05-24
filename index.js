@@ -68,7 +68,7 @@ const customCss = `
 }
 `;
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, { customCss }))
+app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs, { customCss }))
 
 app.use(cors())
 app.use(express.json())
