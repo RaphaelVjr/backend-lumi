@@ -34,7 +34,7 @@ const swaggerDefinition = {
         description: "Local server"
       },
       {
-        url: "https://backend-lumi.vercel.app/",
+        url: "https://backend-lumi.vercel.app",
         description: "Production server"
       }
     ]
