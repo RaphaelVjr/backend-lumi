@@ -97,7 +97,9 @@ async function downloadFaturaFile(req, res) {
     const fatura = await FaturaService.getFaturaById(id)
 
     if (fatura) {
-      res.download(`faturas_download/fatura-${fatura.id}.pdf`)
+      // Generate the filename based on the fatura details
+      const filename = `${fatura.id}-${fatura.month}-${fatura.year}.pdf`;
+      res.download(`faturas/${filename}`)
     } else {
       const errorResponse = {
         timestamp: new Date().toISOString(),
