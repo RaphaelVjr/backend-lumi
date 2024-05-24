@@ -7,6 +7,7 @@ const swaggerUi = require("swagger-ui-express")
 const app = express()
 const specs = swaggerJsdoc(swaggerOptions)
 require('dotenv').config()
+const PORT = process.env.PORT || 3000;
 
 const customCss = `
 .swagger-ui .topbar {
@@ -75,6 +76,8 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use("/faturas", faturaRoutes)
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on http://localhost:${process.env.PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`)
 })
+
+module.exports = app;

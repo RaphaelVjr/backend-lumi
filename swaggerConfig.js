@@ -38,7 +38,7 @@ const swaggerDefinition = {
   
   const options = {
     swaggerDefinition,
-    apis: ["./src/routes/fatura.routes.js", "./src/routes/otherRoute.routes.js"] // Include specific route files
+    apis: ["./src/routes/fatura.routes.js", "./src/routes/otherRoute.routes.js"]
   };
 
 module.exports = options;

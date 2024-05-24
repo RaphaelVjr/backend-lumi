@@ -18,22 +18,25 @@ def extract_data_from_pdf(pdf_path):
     text = extract_text(pdf_path)
     lines = text.split('\n')
 
-    energia_eletrica_valor = None
+    energia_eletrica_valor = 0
     numero_cliente = None
     mes_referencia = None
-    contrib_ilum_publica = None
-    energia_eletrica_quantidade = None
-    energia_scee_quantidade = None
-    energia_scee_valor = None
-    energia_compensada_valor = None
-    energia_compensada_quantidade = None
+    energia_scee_isenta = 0
+    contrib_ilum_publica = 0
+    energia_eletrica_quantidade = 0
+    energia_scee_quantidade = 0
+    energia_scee_valor = 0
+    energia_compensada_valor = 0
+    energia_compensada_quantidade = 0
 
 
     for i in range(len(lines)):
         if "Nº DO CLIENTE" in lines[i]:
             if i + 1 < len(lines):
                 numero_cliente_line = lines[i + 1].strip()
+                print(f"numero_cliente_line: {numero_cliente_line}")
                 numero_cliente = numero_cliente_line.split()[0]
+                print(f"numero_cliente: {numero_cliente}") 
 
         if "Referente a" in lines[i]:
             mes_referencia = lines[i + 1].strip()
@@ -61,6 +64,29 @@ def extract_data_from_pdf(pdf_path):
                     energia_scee_valor = float(scee_valor_str)
             except ValueError as e:
                 print(f"Error extracting Energia SCEE data: {e}")
+                energia_scee_quantidade = 0
+                energia_scee_valor = 0
+                
+        if "Energia SCEE ISENTA" in lines[i] and not energia_scee_isenta:
+            try:
+                scee_quantidade_str = lines[i + 10].replace(',', '.').replace(' ', '')
+                scee_valor_str = lines[i + 18].replace(',', '.').replace(' ', '')
+                if id == 8:
+                    scee_quantidade_str = lines[i + 11].replace(',', '.').replace(' ', '')
+                    scee_valor_str = lines[i + 19].replace(',', '.').replace(' ', '')
+                if id == 15:
+                    scee_quantidade_str = lines[i + 12].replace(',', '.').replace(' ', '')
+                    scee_valor_str = lines[i + 20].replace(',', '.').replace(' ', '')
+                if id == 16:
+                    scee_quantidade_str = lines[i + 13].replace(',', '.').replace(' ', '')
+                    scee_valor_str = lines[i + 21].replace(',', '.').replace(' ', '')
+                if scee_quantidade_str and scee_valor_str:
+                    energia_scee_quantidade = float(scee_quantidade_str)
+                    energia_scee_valor = float(scee_valor_str)
+            except ValueError as e:
+                print(f"Error extracting Energia SCEE data: {e}")
+                energia_scee_quantidade = 0
+                energia_scee_valor = 0
 
         if "Energia Elétrica" in lines[i] and not energia_eletrica_quantidade:
             try:
@@ -80,6 +106,8 @@ def extract_data_from_pdf(pdf_path):
                     energia_eletrica_valor = float(valor_str)
             except ValueError as e:
                 print(f"Conversion error: {e}")
+                energia_eletrica_quantidade = 0
+                energia_eletrica_valor = 0
 
         if "Energia compensada GD I" in lines[i] and not energia_compensada_quantidade:
             try:
@@ -99,6 +127,8 @@ def extract_data_from_pdf(pdf_path):
                     energia_compensada_valor = float(compensada_valor_str)
             except ValueError as e:
                 print(f"Error extracting Energia compensada data: {e}")
+                energia_compensada_quantidade = 0
+                energia_compensada_valor = 0
 
         if "Contrib Ilum Publica Municipal" in lines[i] and not contrib_ilum_publica:
             try:
@@ -113,6 +143,7 @@ def extract_data_from_pdf(pdf_path):
                     contrib_ilum_publica = float(contrib_str)
             except ValueError as e:
                 print(f"Error extracting Contrib Ilum Publica data: {e}")
+                contrib_ilum_publica = 0
 
     return (numero_cliente, mes_referencia, energia_eletrica_quantidade, energia_eletrica_valor, energia_scee_quantidade, energia_scee_valor, energia_compensada_quantidade, energia_compensada_valor, contrib_ilum_publica)
 
@@ -128,9 +159,17 @@ def insert_into_postgres(data):
     cursor = connection.cursor()
 
     try:
-        insert_query = "INSERT INTO faturas (id, numero_cliente, mes_referencia, energia_eletrica_quantidade, energia_eletrica_valor, energia_scee_quantidade, energia_scee_valor, energia_compensada_quantidade, energia_compensada_valor, contrib_ilum_publica) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-        cursor.execute(insert_query, data)
-        connection.commit()
+        numero_cliente, mes_referencia = data[1], data[2]  
+
+        check_query = "SELECT * FROM faturas WHERE numero_cliente = %s AND mes_referencia = %s;"
+        cursor.execute(check_query, (numero_cliente, mes_referencia))
+
+        if cursor.fetchone() is None:
+            insert_query = "INSERT INTO faturas (id, numero_cliente, mes_referencia, energia_eletrica_quantidade, energia_eletrica_valor, energia_scee_quantidade, energia_scee_valor, energia_compensada_quantidade, energia_compensada_valor, contrib_ilum_publica) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+            cursor.execute(insert_query, data)
+            connection.commit()
+        else:
+            print(f"A record with numero_cliente {numero_cliente} and mes_referencia {mes_referencia} already exists.")
     except Exception as e:
         connection.rollback()
         print(f"Error: {e}")

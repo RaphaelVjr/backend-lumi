@@ -1,12 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Practice tests for extract data from pdf file",
+  "description": "Extract data from pdf and read on a graphic dashboard",
   "main": "index.js",
   "scripts": {
     "postinstall": "prisma generate",
     "build": "prisma generate && babel src -d lib",
     "start": "node index.js",
+    "test": "mocha src/tests/**/*.js --timeout 5000",
     "dev": "nodemon index"
   },
   "author": "Raphael Vitorio",
@@ -22,17 +23,25 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
+    "jsdom": "^24.0.0",
     "knex": "^3.1.0",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.0",
     "pdf-parse": "^1.1.1",
     "pg": "^8.11.5",
     "pg-promise": "^11.6.0",
+    "sinon": "^18.0.0",
+    "supertest": "^7.0.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "unzipper": "^0.11.6",
+    "vitest": "^1.6.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
     "babel-cli": "^6.26.0",
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0",
     "prisma": "^5.14.0"
   }
 }

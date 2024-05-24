@@ -1,4 +1,5 @@
 const express = require("express")
+const multer = require('multer');
 const FaturaController = require("../controllers/faturaController")
 
 const router = express.Router()
@@ -97,5 +98,7 @@ router.get(
  *         description: Fatura file not found.
  */
 router.get("/download/:id", FaturaController.downloadFaturaFile)
+
+router.post('/importar', FaturaController.upload.array('arquivo'), FaturaController.importarFatura);
 
 module.exports = router
