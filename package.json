@@ -15,7 +15,7 @@
   "dependencies": {
     "@prisma/client": "^5.14.0",
     "@prisma/extension-accelerate": "^1.0.0",
-    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-jsdoc": "^6.0.0",
     "@types/swagger-ui-express": "^4.1.6",
     "babel": "^6.23.0",
     "cors": "^2.8.5",
@@ -31,7 +31,7 @@
     "sinon": "^18.0.0",
     "supertest": "^7.0.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
+    "swagger-ui-express": "^4.6.3",
     "unzipper": "^0.11.6"
   },
   "devDependencies": {

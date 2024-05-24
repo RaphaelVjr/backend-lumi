@@ -1,7 +1,6 @@
 const express =  require("express")
 const cors =  require("cors")
 const faturaRoutes = require("./src/routes/fatura.routes")
-const path = require('path');
 const swaggerJsdoc = require("swagger-jsdoc")
 const swaggerOptions =  require("./swaggerConfig")
 const swaggerUi = require("swagger-ui-express")
@@ -74,8 +73,6 @@ app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs, { customCss }))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use("/faturas", faturaRoutes)
 
 app.listen(PORT, () => {
