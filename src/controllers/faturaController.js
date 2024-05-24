@@ -48,7 +48,31 @@ async function getFaturaById(req, res) {
     const id = parseInt(req.params.id)
     const fatura = await FaturaService.getFaturaById(id)
     if (fatura) {
+      const monthMapping = {
+        'JAN': '01',
+        'FEV': '02',
+        'MAR': '03',
+        'ABR': '04',
+        'MAI': '05',
+        'JUN': '06',
+        'JUL': '07',
+        'AGO': '08',
+        'SET': '09',
+        'OUT': '10',
+        'NOV': '11',
+        'DEZ': '12'
+      };
+
+      // Parse the mes_referencia to get the month and year
+      const [month, year] = fatura.mes_referencia.split('/');
+      fatura.month = monthMapping[month];
+      fatura.year = year;
+
+      // Generate the filename based on the fatura details
+      const filename = `${fatura.installationNumber}-${fatura.month}-${fatura.year}.pdf`;
+      fatura.filename = filename;
       res.json(fatura)
+      return fatura;
     } else {
       const errorResponse = {
         timestamp: new Date().toISOString(),
@@ -97,9 +121,8 @@ async function downloadFaturaFile(req, res) {
     const fatura = await FaturaService.getFaturaById(id)
 
     if (fatura) {
-      // Generate the filename based on the fatura details
-      const filename = `${fatura.id}-${fatura.month}-${fatura.year}.pdf`;
-      res.download(`faturas/${filename}`)
+      // Use the filename from the fatura object
+      res.download(`faturas/${fatura.filename}`)
     } else {
       const errorResponse = {
         timestamp: new Date().toISOString(),
