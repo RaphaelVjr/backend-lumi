@@ -2,7 +2,7 @@ const swaggerDefinition = {
     openapi: "3.0.0",
     components: {
       schemas: {
-        Fatura: {
+        Invoice: {
           type: "object",
           properties: {
             id: { type: "integer" },
@@ -42,7 +42,7 @@ const swaggerDefinition = {
   
   const options = {
     swaggerDefinition,
-    apis: ["./src/routes/fatura.routes.js", "./src/routes/otherRoute.routes.js"]
+    apis: ["./src/routes/invoice.routes.js", "./src/routes/otherRoute.routes.js"]
   };
 
 module.exports = options;

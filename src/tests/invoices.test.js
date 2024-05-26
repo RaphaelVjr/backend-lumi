@@ -1,16 +1,16 @@
 const request = require('supertest');
 const app = require('../../index.js');
 const sinon = require('sinon');
-const FaturaService = require('../services/faturas.service.js');
+const InvoiceService = require('../services/invoices.service.js');
 
-describe('GET /faturas/:id', () => {
+describe('GET /invoices/:id', () => {
   afterEach(() => {
     sinon.restore();
   });
 
-  it('responds with a fatura object when given a valid ID', async () => {
+  it('responds with a invoice object when given a valid ID', async () => {
     const { expect } = await import('chai');
-    sinon.stub(FaturaService, 'getFaturaById').returns({
+    sinon.stub(InvoiceService, 'getInvoiceById').returns({
       id: 1,
       numero_cliente: "7005400387",
       mes_referencia: "JUN/2023",
@@ -24,7 +24,7 @@ describe('GET /faturas/:id', () => {
     });
 
     const response = await request(app)
-      .get('/faturas/1')
+      .get('/invoices/1')
       .expect('Content-Type', /json/)
       .expect(200);
 
@@ -44,22 +44,22 @@ describe('GET /faturas/:id', () => {
 
   it('responds with 404 when given an invalid ID', async () => {
     const { expect } = await import('chai');
-    sinon.stub(FaturaService, 'getFaturaById').returns(null);
+    sinon.stub(InvoiceService, 'getInvoiceById').returns(null);
 
     const response = await request(app)
-      .get('/faturas/999')
+      .get('/invoices/999')
       .expect('Content-Type', /json/)
       .expect(404);
       
-    const expectedErrorMessage = 'Fatura não encontrada com o ID: 999';
+    const expectedErrorMessage = 'Invoice não encontrada com o ID: 999';
     expect(response.body.error.errorMessage).to.equal(expectedErrorMessage);
   });
 });
 
-describe('GET /faturas', () => {
+describe('GET /invoices', () => {
   it('responds with json', () => {
     return request(app)
-      .get('/faturas')
+      .get('/invoices')
       .expect('Content-Type', /json/)
       .expect(200)
       .then((res) => {

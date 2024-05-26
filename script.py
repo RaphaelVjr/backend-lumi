@@ -161,11 +161,11 @@ def insert_into_postgres(data):
     try:
         numero_cliente, mes_referencia = data[1], data[2]  
 
-        check_query = "SELECT * FROM faturas WHERE numero_cliente = %s AND mes_referencia = %s;"
+        check_query = "SELECT * FROM invoices WHERE numero_cliente = %s AND mes_referencia = %s;"
         cursor.execute(check_query, (numero_cliente, mes_referencia))
 
         if cursor.fetchone() is None:
-            insert_query = "INSERT INTO faturas (id, numero_cliente, mes_referencia, energia_eletrica_quantidade, energia_eletrica_valor, energia_scee_quantidade, energia_scee_valor, energia_compensada_quantidade, energia_compensada_valor, contrib_ilum_publica) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+            insert_query = "INSERT INTO invoices (id, numero_cliente, mes_referencia, energia_eletrica_quantidade, energia_eletrica_valor, energia_scee_quantidade, energia_scee_valor, energia_compensada_quantidade, energia_compensada_valor, contrib_ilum_publica) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
             cursor.execute(insert_query, data)
             connection.commit()
         else:
@@ -190,5 +190,5 @@ def process_pdfs(pdf_folder):
                 insert_into_postgres(data_with_id)
 
 if __name__ == "__main__":
-    pdf_folder = "faturas"
+    pdf_folder = "invoices"
     process_pdfs(pdf_folder)

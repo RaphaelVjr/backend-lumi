@@ -1,12 +1,12 @@
-const FaturaService = require("../services/faturas.service")
+const InvoiceService = require("../services/invoices.service")
 const multer = require('multer');
 const fs = require('fs').promises;
-const { executarScriptPython } = require("../services/faturas.service");
+const { executarScriptPython } = require("../services/invoices.service");
 const path = require('path');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'faturas');
+    cb(null, 'invoices');
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
@@ -16,23 +16,23 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-async function importarFatura(req, res) {
+async function invoiceImport(req, res) {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'Nenhum arquivo enviado' });
     }
 
-    const newPath = await FaturaService.importarFatura(req.file);
+    const newPath = await InvoiceService.invoiceImport(req.file);
     return res.status(200).json({ message: 'Arquivo PDF importado com sucesso', newPath });
   } catch (error) {
-    return res.status(500).json({ error: `Erro ao importar fatura: ${error.message}` });
+    return res.status(500).json({ error: `Erro ao importar invoice: ${error.message}` });
   }
 }
 
-async function getAllFaturas(req, res) {
+async function getAllInvoices(req, res) {
   try {
-    const faturas = await FaturaService.getAllFaturas()
-    res.json(faturas)
+    const invoices = await InvoiceService.getAllInvoices()
+    res.json(invoices)
   } catch (error) {
     const errorResponse = {
       timestamp: new Date().toISOString(),
@@ -43,11 +43,11 @@ async function getAllFaturas(req, res) {
   }
 }
 
-async function getFaturaById(req, res) {
+async function getInvoiceById(req, res) {
   try {
     const id = parseInt(req.params.id)
-    const fatura = await FaturaService.getFaturaById(id)
-    if (fatura) {
+    const invoice = await InvoiceService.getInvoiceById(id)
+    if (invoice) {
       const monthMapping = {
         'JAN': '01',
         'FEV': '02',
@@ -64,20 +64,20 @@ async function getFaturaById(req, res) {
       };
 
       // Parse the mes_referencia to get the month and year
-      const [month, year] = fatura.mes_referencia.split('/');
-      fatura.month = monthMapping[month];
-      fatura.year = year;
+      const [month, year] = invoice.mes_referencia.split('/');
+      invoice.month = monthMapping[month];
+      invoice.year = year;
 
-      // Generate the filename based on the fatura details
-      const filename = `${fatura.installationNumber}-${fatura.month}-${fatura.year}.pdf`;
-      fatura.filename = filename;
-      res.json(fatura)
-      return fatura;
+      // Generate the filename based on the invoice details
+      const filename = `${invoice.installationNumber}-${invoice.month}-${invoice.year}.pdf`;
+      invoice.filename = filename;
+      res.json(invoice)
+      return invoice;
     } else {
       const errorResponse = {
         timestamp: new Date().toISOString(),
         errorCode: 404,
-        errorMessage: `Fatura não encontrada com o ID: ${id}`
+        errorMessage: `Invoice não encontrada com o ID: ${id}`
       };
       res.status(404).json({ error: errorResponse });
     }
@@ -91,17 +91,17 @@ async function getFaturaById(req, res) {
   }
 }
 
-async function getFaturaByNumeroCliente(req, res) {
+async function getInvoiceByNumeroCliente(req, res) {
   try {
     const numeroCliente = req.params.numero_cliente
-    const fatura = await FaturaService.findByNumeroCliente(numeroCliente)
-    if (fatura.length > 0) {
-      res.json(fatura)
+    const invoice = await InvoiceService.findByNumeroCliente(numeroCliente)
+    if (invoice.length > 0) {
+      res.json(invoice)
     } else {
       const errorResponse = {
         timestamp: new Date().toISOString(),
         errorCode: 404,
-        errorMessage: `Fatura não encontrada para este número de cliente: ${numeroCliente}`
+        errorMessage: `Invoice não encontrada para este número de cliente: ${numeroCliente}`
       };
       res.status(404).json({ error: errorResponse });
     }
@@ -115,14 +115,13 @@ async function getFaturaByNumeroCliente(req, res) {
   }
 }
 
-async function downloadFaturaFile(req, res) {
+async function downloadInvoiceFile(req, res) {
   try {
     const id = parseInt(req.params.id)
-    const fatura = await FaturaService.getFaturaById(id)
+    const invoice = await InvoiceService.getInvoiceById(id)
 
-    if (fatura) {
-      // Use the filename from the fatura object
-      res.download(`faturas/${fatura.filename}`)
+    if (invoice) {
+      res.download(`invoices/${invoice.filename}`)
     } else {
       const errorResponse = {
         timestamp: new Date().toISOString(),
@@ -141,4 +140,4 @@ async function downloadFaturaFile(req, res) {
   }
 }
 
-module.exports = { downloadFaturaFile, getFaturaByNumeroCliente, getFaturaById, getAllFaturas, importarFatura, upload }
+module.exports = { downloadInvoiceFile, getInvoiceByNumeroCliente, getInvoiceById, getAllInvoices, invoiceImport, upload }

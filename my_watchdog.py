@@ -18,7 +18,7 @@ class MyHandler(FileSystemEventHandler):
             os.system("python script.py")
 
 if __name__ == "__main__":
-    path_to_watch = "faturas"
+    path_to_watch = "invoices"
     event_handler = MyHandler()
     observer = Observer()
     observer.schedule(event_handler, path_to_watch, recursive=True)

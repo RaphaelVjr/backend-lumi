@@ -8,7 +8,7 @@ datasource db {
   directUrl = env("DATABASE_URL_NON_POOLING") 
 }
 
-model faturas {
+model invoices {
   id                            Int    @id
   numero_cliente                String
   mes_referencia                String

@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Fatura" (
+CREATE TABLE "Invoice" (
     "id" SERIAL NOT NULL,
     "cliente" TEXT NOT NULL,
     "mesReferencia" TEXT NOT NULL,
@@ -8,5 +8,5 @@ CREATE TABLE "Fatura" (
     "energiaCompensada" JSONB NOT NULL,
     "contribIlumPublica" JSONB NOT NULL,
 
-    CONSTRAINT "Fatura_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Invoice_pkey" PRIMARY KEY ("id")
 );

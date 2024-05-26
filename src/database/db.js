@@ -10,9 +10,9 @@ pool.connect((err) =>{
 })
 
 
-async function insertFatura(cliente, mesReferencia, energiaEletrica, energiaSCEEE, energiaCompensada, contribIlumPublica) {
-    const res = await client.query('INSERT INTO faturas VALUES($1, $2, $3, $4, $5, $6)', [cliente, mesReferencia, energiaEletrica, energiaSCEEE, energiaCompensada, contribIlumPublica]);
+async function insertInvoice(cliente, mesReferencia, energiaEletrica, energiaSCEEE, energiaCompensada, contribIlumPublica) {
+    const res = await client.query('INSERT INTO invoices VALUES($1, $2, $3, $4, $5, $6)', [cliente, mesReferencia, energiaEletrica, energiaSCEEE, energiaCompensada, contribIlumPublica]);
     return res;
 }
 
-module.exports = { pool, insertFatura };
+module.exports = { pool, insertInvoice };

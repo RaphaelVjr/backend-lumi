@@ -1,14 +1,14 @@
 /*
   Warnings:
 
-  - You are about to drop the `Fatura` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `Invoice` table. If the table is not empty, all the data it contains will be lost.
 
 */
 -- DropTable
-DROP TABLE "Fatura";
+DROP TABLE "Invoice";
 
 -- CreateTable
-CREATE TABLE "faturas" (
+CREATE TABLE "invoices" (
     "id" INTEGER NOT NULL,
     "numero_cliente" TEXT NOT NULL,
     "mes_referencia" TEXT NOT NULL,
@@ -20,5 +20,5 @@ CREATE TABLE "faturas" (
     "energia_compensada_valor" DOUBLE PRECISION NOT NULL,
     "contrib_ilum_publica" DOUBLE PRECISION NOT NULL,
 
-    CONSTRAINT "faturas_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Invoices_pkey" PRIMARY KEY ("id")
 );

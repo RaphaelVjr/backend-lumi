@@ -1,6 +1,6 @@
 const express =  require("express")
 const cors =  require("cors")
-const faturaRoutes = require("./src/routes/fatura.routes")
+const invoiceRoutes = require("./src/routes/invoice.routes")
 const swaggerJsdoc = require("swagger-jsdoc")
 const bodyParser = require('body-parser');
 const swaggerOptions =  require("./swaggerConfig")
@@ -69,7 +69,7 @@ app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs, options))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use("/faturas", faturaRoutes)
+app.use("/invoices", invoiceRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
