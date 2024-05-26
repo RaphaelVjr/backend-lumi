@@ -48,30 +48,7 @@ async function getInvoiceById(req, res) {
     const id = parseInt(req.params.id)
     const invoice = await InvoiceService.getInvoiceById(id)
     if (invoice) {
-      const monthMapping = {
-        'JAN': '01',
-        'FEV': '02',
-        'MAR': '03',
-        'ABR': '04',
-        'MAI': '05',
-        'JUN': '06',
-        'JUL': '07',
-        'AGO': '08',
-        'SET': '09',
-        'OUT': '10',
-        'NOV': '11',
-        'DEZ': '12'
-      };
-
-      // Parse the mes_referencia to get the month and year
-      const [month, year] = invoice.mes_referencia.split('/');
-      invoice.month = monthMapping[month];
-      invoice.year = year;
-
-      // Generate the filename based on the invoice details
-      const filename = `${invoice.installationNumber}-${invoice.month}-${invoice.year}.pdf`;
-      invoice.filename = filename;
-      res.json(invoice)
+      res.status(200).json(invoice)
       return invoice;
     } else {
       const errorResponse = {
