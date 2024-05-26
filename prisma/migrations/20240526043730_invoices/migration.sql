@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Invoice` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE "Invoice";
-
 -- CreateTable
 CREATE TABLE "invoices" (
     "id" INTEGER NOT NULL,
@@ -20,5 +11,5 @@ CREATE TABLE "invoices" (
     "energia_compensada_valor" DOUBLE PRECISION NOT NULL,
     "contrib_ilum_publica" DOUBLE PRECISION NOT NULL,
 
-    CONSTRAINT "Invoices_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "invoices_pkey" PRIMARY KEY ("id")
 );
