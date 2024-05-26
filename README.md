@@ -5,7 +5,7 @@
 
 # Extração e Exibição de dados de Fatura de Luz :zap:
 
-Projeto designado a extrair dados dos extratos das faturas de luz, organizá-los e aplicar regras para exibição dos mesmos em gráficos onde podemos distinguir a comparação dos valores.
+Projeto designado a extrair dados dos extratos das faturas de luz, organizá-los e aplicar regras para exibição dos mesmos em gráficos onde podemos distinguir a comparação dos valores (Python watchdog foi implementado para caso houvesse a implementação da feature de importação de arquivos, porém acabei focando somente no que foi pedido no desafio).
 
 ## Critérios de aceite
 
