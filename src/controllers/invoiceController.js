@@ -121,7 +121,7 @@ async function downloadInvoiceFile(req, res) {
     const invoice = await InvoiceService.getInvoiceById(id)
 
     if (invoice) {
-      res.download(`invoices/${invoice.filename}`)
+      res.download(`invoices_download/invoice-${invoice.id}.pdf`)
     } else {
       const errorResponse = {
         timestamp: new Date().toISOString(),
