@@ -1,6 +1,6 @@
 const express = require("express")
 const multer = require('multer');
-const InvoiceController = require("../controllers/InvoiceController")
+const InvoiceController = require("../controllers/invoiceController")
 
 const router = express.Router()
 
